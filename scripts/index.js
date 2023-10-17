@@ -32,5 +32,5 @@ function deleteCard(evt) {
   container.remove();
 }
 
-//Вывод карточек на страницу
-initialCards.forEach((card)  => {addCard(card, cardsContainer)});
+//Вывод карточек на страницу (вариант с сокр пунктуацией)
+initialCards.forEach( card  => addCard(card, cardsContainer));
