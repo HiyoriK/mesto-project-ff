@@ -29,7 +29,7 @@ function closePopup(popup) {
 
 
 function closePopupByEsc(evt) {
-  if (evt.key === 'Esc'){
+  if (evt.key === 'Escape'){
     const popupOpened = document.querySelector('.popup_is-opened')
     closePopup(popupOpened);
   }
