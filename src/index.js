@@ -26,8 +26,8 @@ const popupImage = popupCardImage.querySelector('.popup__image')
 
 
 function addCard(item, itemList) {
-  const cardItem = createCard(item, deleteCard, toggleCardLike);
-  itemList.append(cardItem);
+  const cardItem = createCard(item, deleteCard, toggleCardLike, openPopupImage);
+  itemList.prepend(cardItem); //в тз изначально, вроде как, не указывали конкретно, важен ли порядок 6 карточек, изначально выводимых на страницу. Работает, но есть сомнения, оставлять ли в таком виде. На демо-видео они стоят с "Архыза", но по сути, мне кажется, не так и важно как они изначально выводятся: все равно нет никакой сортировки по алфавиту или еще чему. Поправьте меня здесь, пожалуйста, если не права. Переделаю, если нужно.
 }
 
 initialCards.forEach( card  => addCard(card, cardsContainer));
@@ -44,15 +44,15 @@ addNewCardButton.addEventListener('click', () => {
   openPopup(newCardPopup);
 })
 
-// здесь все еще поп-ап картинки
 function openPopupImage(evt) {
 
   popupImage.src = evt.target.src;
-  popupImage.alt = popupCaption.textContent =  evt.target.alt;
+  popupImage.alt = evt.target.alt;
+  popupCaption.textContent = evt.target.name;
 
   openPopup(popupCardImage);
-}
 
+}
 
 
 function closePopupbyX(evt) {

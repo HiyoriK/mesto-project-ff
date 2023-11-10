@@ -1,6 +1,5 @@
 export { createCard, deleteCard, toggleCardLike};
 
-
 const cardTemplate = document.querySelector('#card-template').content;
 
 function createCard(card, deleteCard, toggleCardLike, openImage) {
@@ -36,6 +35,9 @@ function deleteCard(evt) {
 function toggleCardLike(evt) {
   evt.target.classList.toggle('card__like-button_is-active');
 }
+
+
+
 
 
 
