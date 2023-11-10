@@ -13,15 +13,10 @@ document.addEventListener('mousedown', closePopupByOverlay);
 
 };
 
+
 function closePopup(popup) {
   popup.classList.remove('popup_is-animated');
-  setTimeout(() => {
-    popup.classList.remove('popup_is-opened');
-  }, 0);
-
-  setTimeout(() => {
-    popup.classList.remove('popup_is-animated');
-  }, 600);
+   popup.classList.remove('popup_is-opened');
 
   document.removeEventListener('keydown', closePopupByEsc);
   document.removeEventListener('mousedown', closePopupByOverlay);

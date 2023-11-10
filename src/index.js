@@ -18,8 +18,11 @@ const newCardPopup = document.querySelector('.popup_type_new-card');
 const addNewCardButton = document.querySelector('.profile__add-button');
 const newCardform = document.forms['new-place'];
 const formPlaceNameInput = newCardform.elements['place-name'];
-const formLinkInput = newCardform.elements.link;
+const formInputUrl = newCardform.elements.link;
 
+const popupCardImage = document.querySelector('.popup_type_image');
+const popupCaption = popupCardImage.querySelector('.popup__caption');
+const popupImage = popupCardImage.querySelector('.popup__image')
 
 
 function addCard(item, itemList) {
@@ -32,6 +35,7 @@ initialCards.forEach( card  => addCard(card, cardsContainer));
 
 profileEditButton.addEventListener('click', () => {
  openPopup(profilePopup);
+
  formNameInput.value = profileName.textContent;
  formDescriptionInput.value = profileDescription.textContent;
 })
@@ -40,30 +44,49 @@ addNewCardButton.addEventListener('click', () => {
   openPopup(newCardPopup);
 })
 
-// здесь написать редактировнаие профиля
-// здесь - открытие и закрытие фото по клику
+// здесь все еще поп-ап картинки
+function openPopupImage(evt) {
+
+  popupImage.src = evt.target.src;
+  popupImage.alt = popupCaption.textContent =  evt.target.alt;
+
+  openPopup(popupCardImage);
+}
+
+
 
 function closePopupbyX(evt) {
   const popup = evt.target.closest('.popup');
   closePopup(popup);
-};
+}
 
 closeButtonsList.forEach((btn) => {
   btn.addEventListener('click', closePopupbyX);
 });
 
-//  не отправляется . подумать...
-//function addNewCard(evt) {
-//  evt.preventDefault();
-//
-//  const newCardContent = {
-//    name: formPlaceNameInput.value,
-//    link: formLinkInput.value,
-//  };
-//
-//  addCard(item, itemList);
-//
-//  closePopup(newCardPopup)
-//};
-//
-//newCardform.addEventListener('submit', addNewCard);
+// решить проблему с подгрузкой картинки
+function addNewCard(evt) {
+  evt.preventDefault();
+
+  const newCardContent = {
+    name: formPlaceNameInput.value,
+    link: formInputUrl.value,
+    alt: formPlaceNameInput.value,
+  };
+
+  addCard(newCardContent, cardsContainer);
+  closePopup(newCardPopup)
+}
+
+function editProfile(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = formNameInput.value;
+  profileDescription.textContent = formDescriptionInput.value;
+
+  closePopup(profilePopup);
+}
+
+
+newCardform.addEventListener('submit', addNewCard);
+profileEditForm.addEventListener('submit', editProfile);
