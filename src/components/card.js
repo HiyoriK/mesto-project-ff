@@ -10,7 +10,7 @@ function createCard(card, deleteCard, toggleCardLike, openImage) {
   const cardLikeButton = newCard.querySelector('.card__like-button');
 
   cardImage.src = card.link;
-  cardImage.alt = card.alt;
+  cardImage.alt = card.name;
   cardTitle.textContent = card.name;
 
 
