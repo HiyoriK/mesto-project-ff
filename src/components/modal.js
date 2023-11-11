@@ -10,7 +10,6 @@ setTimeout(() => {
 
 document.addEventListener('keydown', closePopupByEsc);
 document.addEventListener('mousedown', closePopupByOverlay);
-
 };
 
 

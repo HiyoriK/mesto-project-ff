@@ -3,6 +3,7 @@ import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
 
+
 const cardsContainer = document.querySelector(".places__list");
 
 const profilePopup = document.querySelector('.popup_type_edit');
@@ -14,8 +15,8 @@ const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const closeButtonsList = document.querySelectorAll('.popup__close');
 
-const newCardPopup = document.querySelector('.popup_type_new-card');
 const addNewCardButton = document.querySelector('.profile__add-button');
+const newCardPopup = document.querySelector('.popup_type_new-card');
 const newCardform = document.forms['new-place'];
 const formPlaceNameInput = newCardform.elements['place-name'];
 const formInputUrl = newCardform.elements.link;
@@ -43,17 +44,15 @@ profileEditButton.addEventListener('click', () => {
 addNewCardButton.addEventListener('click', () => {
   openPopup(newCardPopup);
 })
+// поп-ап пока что бестолковый: думаю, удалить альты в объектах изначальных карточек и оставить попап таким(с одинаковыми тайлтом и альтом), или вытащить карточку, разбив тайтл и альт в попапе. Но тогда это стработает только для изначальных карточек, потому что к новым нет возможности ввести описание все равно = бессмысленно для дальнейшей работы
 
-function openPopupImage(evt) {
-
-  popupImage.src = evt.target.src;
-  popupImage.alt = evt.target.alt;
-  popupCaption.textContent = evt.target.name;
-
+function openPopupImage (evt) {
+ popupImage.src = evt.target.src;
+ popupImage.alt = evt.target.alt;
+ //popupCaption.textContent = ??
   openPopup(popupCardImage);
 
 }
-
 
 function closePopupbyX(evt) {
   const popup = evt.target.closest('.popup');
@@ -64,7 +63,7 @@ closeButtonsList.forEach((btn) => {
   btn.addEventListener('click', closePopupbyX);
 });
 
-// решить проблему с подгрузкой картинки
+
 function addNewCard(evt) {
   evt.preventDefault();
 
@@ -75,7 +74,7 @@ function addNewCard(evt) {
   };
 
   addCard(newCardContent, cardsContainer);
-  closePopup(newCardPopup)
+  closePopup(newCardPopup);
 }
 
 function editProfile(evt) {
@@ -86,7 +85,6 @@ function editProfile(evt) {
 
   closePopup(profilePopup);
 }
-
 
 newCardform.addEventListener('submit', addNewCard);
 profileEditForm.addEventListener('submit', editProfile);
