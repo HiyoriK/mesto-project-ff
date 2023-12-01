@@ -1,6 +1,3 @@
-export {openPopup, closePopup};
-
-
 function openPopup(popup) {
 popup.classList.add('popup_is-animated');
 setTimeout(() => {
@@ -9,9 +6,7 @@ setTimeout(() => {
 }, 0);
 
 document.addEventListener('keydown', closePopupByEsc);
-document.addEventListener('mousedown', closePopupByOverlay);
 };
-
 
 function closePopup(popup) {
   popup.classList.add('popup_is-animated');
@@ -20,20 +15,14 @@ function closePopup(popup) {
   }, 0);
 
   document.removeEventListener('keydown', closePopupByEsc);
-  document.removeEventListener('mousedown', closePopupByOverlay);
 };
 
 
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape'){
-    const popupOpened = document.querySelector('.popup_is-opened')
-    closePopup(popupOpened);
+    closePopup(document.querySelector('.popup_is-opened'));
   }
 };
 
 
-function closePopupByOverlay(evt) {
-  if (evt.target.classList.contains('popup_is-opened')){
-    closePopup(evt.target);
-  } 
-};
+export {openPopup, closePopup};
