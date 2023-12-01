@@ -3,6 +3,7 @@ import {popups, profilePopup, profileEditButton, profileEditForm, formNameInput,
 import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
+import { enableValidation, validationConfig } from './scripts/validation.js';
 
 //добавление карточки на страницу
 
@@ -81,3 +82,6 @@ function editProfile(evt) {
 }
 
 profileEditForm.addEventListener('submit', editProfile);
+
+// валидация всех полей
+enableValidation(validationConfig);
