@@ -7,6 +7,9 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 };
 
+// починить окрашивание надписи
+
+
  const showError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
@@ -44,7 +47,7 @@ function setEventListeners (formElement, inputSelector, inputErrorClass, errorCl
   inputList.forEach((inputElement) => {
   inputElement.addEventListener('input', function () {
     checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
-    toggleButtonState(inputList, buttonElement), inactiveButtonClass;
+    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   });
 });
 }
@@ -70,7 +73,7 @@ function hasInvalidInput (inputList) {
 function toggleButtonState (inputList, buttonElement, inactiveButtonClass) {
   if(hasInvalidInput(inputList)) {
     buttonElement.classList.add(inactiveButtonClass);
-    // buttonElement.disabled = true;
+    buttonElement.disabled = true;
   }
   else{
     buttonElement.classList.remove(inactiveButtonClass);
