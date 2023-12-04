@@ -4,7 +4,7 @@ import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
 import {validationConfig, enableValidation, clearValidation} from './scripts/validation.js';
-
+import {user, getUserInfo} from './scripts/api.js';
 //добавление карточки на страницу
 
 function addCard(item, itemList) {
@@ -17,6 +17,24 @@ const cardsContainer = document.querySelector(".places__list");
 
 initialCards.forEach( card  => addCard(card, cardsContainer));
 
+//вывод данных с сервера
+let originalId = '';
+const promises = [getUserInfo]
+
+Promise.all(promises)
+.then(() => {
+
+getUserInfo()
+.then((data) => {
+  originalId = data['_id'];
+  formNameInput.textContent = data.name;
+  formDescriptionInput.textContent = data.about;
+})
+
+// тут запрос на карточки
+
+})
+
 // открытие поп-апов
 // по-ап профиля
 
@@ -25,12 +43,14 @@ profileEditButton.addEventListener('click', () => {
 
  formNameInput.value = profileName.textContent;
  formDescriptionInput.value = profileDescription.textContent;
+ clearValidation (formElement, validationConfig);
 })
 
 // поп-ап добавления карточки
 
 addNewCardButton.addEventListener('click', () => {
   openPopup(newCardPopup);
+  clearValidation (formElement, validationConfig);
 })
 
 //поп-ап открытия изображения по клику на карточку
