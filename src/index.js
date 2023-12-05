@@ -4,7 +4,7 @@ import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
 import {validationConfig, enableValidation, clearValidation} from './scripts/validation.js';
-import {user, getUserInfo, getInitialCards} from './scripts/api.js';
+import {user, getUserInfo, getInitialCards, updateProfileInfo} from './scripts/api.js';
 //добавление карточки на страницу
 
 function addCard(item, itemList) {
@@ -44,14 +44,14 @@ profileEditButton.addEventListener('click', () => {
 
  formNameInput.value = profileName.textContent;
  formDescriptionInput.value = profileDescription.textContent;
- clearValidation (formElement, validationConfig);
+//  clearValidation (formElement, validationConfig);
 })
 
 // поп-ап добавления карточки
 
 addNewCardButton.addEventListener('click', () => {
   openPopup(newCardPopup);
-  clearValidation (formElement, validationConfig);
+  // clearValidation (formElement, validationConfig);
 })
 
 //поп-ап открытия изображения по клику на карточку
@@ -95,10 +95,12 @@ newCardform.addEventListener('submit', addNewCard);
 
 function editProfile(evt) {
   evt.preventDefault();
-
-  profileName.textContent = formNameInput.value;
-  profileDescription.textContent = formDescriptionInput.value;
-
+  updateProfileInfo(formNameInput.value, formDescriptionInput.value)
+  .then((data) => {
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+  })
+  .catch(console.error)
   closePopup(profilePopup);
 }
 
