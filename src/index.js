@@ -1,37 +1,38 @@
 import './pages/index.css';
-import {popups, profilePopup, profileEditButton, profileEditForm, formNameInput, formDescriptionInput, newCardPopup, addNewCardButton, popupCardImage, popupCaption, popupImage, newCardform, formPlaceNameInput, formInputUrl, profileName, profileDescription} from './components/constants.js';
+import {popups, profilePopup, profileEditButton, profileEditForm, formNameInput, formDescriptionInput, newCardPopup, addNewCardButton, popupCardImage, popupCaption, popupImage, newCardform, formPlaceNameInput, formInputUrl, profileName, profileDescription, cardsContainer} from './components/constants.js';
 import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
 import {validationConfig, enableValidation, clearValidation} from './scripts/validation.js';
-import {user, getUserInfo} from './scripts/api.js';
+import {user, getUserInfo, getInitialCards} from './scripts/api.js';
 //добавление карточки на страницу
 
 function addCard(item, itemList) {
-  const cardItem = createCard(item, deleteCard, toggleCardLike, openPopupImage);
+  const cardItem = createCard(item, deleteCard, toggleCardLike, openPopupImage, originalId);
   itemList.prepend(cardItem);
 }
 
-//вывод карточек на страницу
-const cardsContainer = document.querySelector(".places__list");
-
-initialCards.forEach( card  => addCard(card, cardsContainer));
-
 //вывод данных с сервера
 let originalId = '';
-const promises = [getUserInfo]
+const promises = [getUserInfo, getInitialCards]
 
 Promise.all(promises)
 .then(() => {
 
 getUserInfo()
-.then((data) => {
+.then(data => {
   originalId = data['_id'];
   formNameInput.textContent = data.name;
   formDescriptionInput.textContent = data.about;
+  //аватарка
 })
+.catch(console.error);
 
-// тут запрос на карточки
+getInitialCards()
+.then(data => {
+  data.forEach(card  => addCard(card, cardsContainer))
+})
+.catch(console.error);
 
 })
 

@@ -13,9 +13,16 @@ const getUserInfo = async () => {
   .then(getResponse); 
 }
 
+const getInitialCards = async () => {
+  return fetch(user.userUrl = '/cards', {
+    headers: user.headers,
+  })
+  .then(getResponse);
+}
+
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
 
 
-export {user, getUserInfo}
+export {user, getUserInfo, getInitialCards}
