@@ -4,7 +4,7 @@ import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
 import {validationConfig, enableValidation, clearValidation} from './scripts/validation.js';
-import {user, getUserInfo, getInitialCards, updateProfileInfo} from './scripts/api.js';
+import {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList} from './scripts/api.js';
 //добавление карточки на страницу
 
 function addCard(item, itemList) {
@@ -78,13 +78,19 @@ popups.forEach((popup) => {
 function addNewCard(evt) {
   evt.preventDefault();
 
+ 
+
   const newCardContent = {
     name: formPlaceNameInput.value,
     link: formInputUrl.value,
     alt: formPlaceNameInput.value,
   };
 
+  addNewCardToList(newCardContent.name, newCardContent.link)
+  .then ((data) => {
   addCard(newCardContent, cardsContainer);
+  })
+  .catch(console.error);
   closePopup(newCardPopup);
   evt.target.reset();
 }

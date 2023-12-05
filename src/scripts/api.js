@@ -32,9 +32,21 @@ const updateProfileInfo = async (userName, userDescription) => {
   .then(getResponse);
 }
 
+const addNewCardToList = async (cardTitle, cardUrl) => {
+  return fetch (user.userUrl + '/cards', {
+    method: 'POST',
+    headers: user.headers,
+    body:JSON.stringify({
+      name: cardTitle,
+      link: cardUrl
+    })
+  })
+  .then(getResponse);
+}
+
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
 
 
-export {user, getUserInfo, getInitialCards, updateProfileInfo}
+export {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList}
