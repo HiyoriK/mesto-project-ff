@@ -102,7 +102,7 @@ newCardform.addEventListener('submit', addNewCard);
 function editProfile(evt) {
   evt.preventDefault();
   updateProfileInfo(formNameInput.value, formDescriptionInput.value)
-  .then((data) => {
+  .then(data => {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
   })

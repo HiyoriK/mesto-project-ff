@@ -1,6 +1,9 @@
+import{user} from '../scripts/api.js'
+
+
 const cardTemplate = document.querySelector('#card-template').content;
 
-function createCard(card, deleteCard, toggleCardLike, openImage) {
+function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   const newCard = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = newCard.querySelector('.card__image');
   const cardTitle = newCard.querySelector('.card__title');
@@ -34,7 +37,7 @@ function toggleCardLike(evt) {
   evt.target.classList.toggle('card__like-button_is-active');
 }
 
-export { createCard, deleteCard, toggleCardLike};
+export {createCard, deleteCard, toggleCardLike};
 
 
 
