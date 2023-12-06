@@ -19,7 +19,13 @@ const formInputUrl = newCardform.elements.link;
 
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
+const profileImage = document.querySelector('.profile__image');
+
+const avatarPopup = document.querySelector('.popup_type_edit-avatar');
+const avatarEditButton = document.querySelector('.profile__image-edit-button');
+const avatartEditForm = document.forms['edit-avatar'];
+const newAvatarUrl = avatartEditForm.elements.link;
 
 const cardsContainer = document.querySelector(".places__list");
 
-export {popups, profilePopup, profileEditButton, profileEditForm, formNameInput, formDescriptionInput, newCardPopup, addNewCardButton, popupCardImage, popupCaption, popupImage, newCardform, formPlaceNameInput, formInputUrl, profileName, profileDescription, cardsContainer};
+export {popups, profilePopup, profileEditButton, profileEditForm, formNameInput, formDescriptionInput, newCardPopup, addNewCardButton, popupCardImage, popupCaption, popupImage, newCardform, formPlaceNameInput, formInputUrl, profileName, profileDescription, profileImage, avatarPopup, avatarEditButton, avatartEditForm, newAvatarUrl, cardsContainer};

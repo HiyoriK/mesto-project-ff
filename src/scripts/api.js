@@ -32,6 +32,17 @@ const updateProfileInfo = async (userName, userDescription) => {
   .then(getResponse);
 }
 
+const updateProfileImage = async (url) => {
+  return fetch(user.userUrl + '/users/me/avatar', {
+    method: 'PATCH',
+    headers: user.headers,
+    body:JSON.stringify({
+     avatar: url
+    })
+  })
+  .then(getResponse);
+}
+
 const addNewCardToList = async (cardTitle, cardUrl) => {
   return fetch (user.userUrl + '/cards', {
     method: 'POST',
@@ -75,4 +86,4 @@ const getResponse = (res) => {
 }
 
 
-export {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList, putLike, removeLike, deleteServerCard}
+export {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList, putLike, removeLike, deleteServerCard, updateProfileImage}

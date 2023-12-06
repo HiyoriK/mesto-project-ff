@@ -9,7 +9,6 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   const cardTitle = newCard.querySelector('.card__title');
   const cardDeleteButton = newCard.querySelector('.card__delete-button');
   const cardLikeButton = newCard.querySelector('.card__like-button');
-  const cardLikeCounter  = newCard.querySelector('.card__like-counter');
   const myPersonalId = '10a6b0e0-042d-42d2-ae9a-432f5cc3ce58';
 
   cardImage.src = card.link;
@@ -44,25 +43,20 @@ function deleteCard (evt) {
 }
 
 function toggleCardLike(evt, cardId) {
-
-  
-  //const likesNumber
+  const likesCounter = newCard.querySelector('.card__like-counter')
 
   if(evt.target.classList.contains('card__like-button_is-active')){
     removeLike(cardId)
     .then((cardData) => {
       evt.target.classList.remove('card__like-button_is-active')
-      //like-counter
-    
-  })
-  .catch(console.error);
-}
-else {
-  putLike(cardId)
+      likesCounter.textContent = cardData.likes.length;
+    })
+
+
+      putLike(cardId)
     .then((cardData) => {
       evt.target.classList.add('card__like-button_is-active')
-      //like-counter
-    
+      likesCounter.textContent = cardData.likes.length;
   })
   .catch(console.error);
 }
