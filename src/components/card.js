@@ -10,16 +10,24 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   const cardDeleteButton = newCard.querySelector('.card__delete-button');
   const cardLikeButton = newCard.querySelector('.card__like-button');
   const cardLikeCounter  = newCard.querySelector('.card__like-counter');
+  const myPersonalId = '10a6b0e0-042d-42d2-ae9a-432f5cc3ce58';
 
   cardImage.src = card.link;
   cardImage.alt = card.name;
   cardTitle.textContent = card.name;
   card.id = card['_id'];
 
+  if(card.owner['_id'] != myPersonalId) {
+    cardDeleteButton.style.display = 'none';
+  }
+  else {
+    cardDeleteButton.addEventListener('click', (evt) => {
+      deleteCard(evt, card.id);
+    });
+  }
 
-  cardDeleteButton.addEventListener('click', (evt) => {
-    deleteCard(evt);
-  });
+
+  
 
   cardLikeButton.addEventListener('click', (evt) => {
     toggleCardLike(evt);
@@ -36,6 +44,8 @@ function deleteCard (evt) {
 }
 
 function toggleCardLike(evt, cardId) {
+
+  
   //const likesNumber
 
   if(evt.target.classList.contains('card__like-button_is-active')){
