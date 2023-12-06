@@ -44,9 +44,35 @@ const addNewCardToList = async (cardTitle, cardUrl) => {
   .then(getResponse);
 }
 
+const putLike = async (cardId) => {
+  return fetch (user.userUrl + `/cards/likes/${cardId}`, {
+    method: 'PUT',
+    headers: user.headers,
+  })
+  .then(getResponse);
+}
+
+const removeLike = async (cardId) => {
+  return fetch (user.userUrl + `/cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: user.headers,
+  })
+  .then(getResponse);
+}
+
+const deleteServerCard = async (cardId) => {
+  return fetch (user.userUrl + `/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: user.headers,
+  })
+  .then(getResponse);
+}
+
+
+
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
 
 
-export {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList}
+export {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList, putLike, removeLike, deleteServerCard}

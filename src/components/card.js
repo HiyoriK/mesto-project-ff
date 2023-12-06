@@ -1,4 +1,4 @@
-import{user} from '../scripts/api.js'
+import{user, putLike, removeLike} from '../scripts/api.js'
 
 
 const cardTemplate = document.querySelector('#card-template').content;
@@ -9,10 +9,12 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   const cardTitle = newCard.querySelector('.card__title');
   const cardDeleteButton = newCard.querySelector('.card__delete-button');
   const cardLikeButton = newCard.querySelector('.card__like-button');
+  const cardLikeCounter  = newCard.querySelector('.card__like-counter');
 
   cardImage.src = card.link;
   cardImage.alt = card.name;
   cardTitle.textContent = card.name;
+  card.id = card['_id'];
 
 
   cardDeleteButton.addEventListener('click', (evt) => {
@@ -28,12 +30,33 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   return newCard;
 }
 
-function deleteCard(evt) {
+function deleteCard (evt) {
   const container = evt.target.closest('.card');
   container.remove();
 }
 
-function toggleCardLike(evt) {
+function toggleCardLike(evt, cardId) {
+  //const likesNumber
+
+  if(evt.target.classList.contains('card__like-button_is-active')){
+    removeLike(cardId)
+    .then((cardData) => {
+      evt.target.classList.remove('card__like-button_is-active')
+      //like-counter
+    
+  })
+  .catch(console.error);
+}
+else {
+  putLike(cardId)
+    .then((cardData) => {
+      evt.target.classList.add('card__like-button_is-active')
+      //like-counter
+    
+  })
+  .catch(console.error);
+}
+
   evt.target.classList.toggle('card__like-button_is-active');
 }
 

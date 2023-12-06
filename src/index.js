@@ -4,7 +4,7 @@ import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
 import {validationConfig, enableValidation, clearValidation} from './scripts/validation.js';
-import {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList} from './scripts/api.js';
+import {user, getUserInfo, getInitialCards, updateProfileInfo, addNewCardToList, deleteServerCard} from './scripts/api.js';
 //добавление карточки на страницу
 
 function addCard(item, itemList) {
@@ -88,6 +88,7 @@ function addNewCard(evt) {
 
   addNewCardToList(newCardContent.name, newCardContent.link)
   .then ((data) => {
+    
   addCard(newCardContent, cardsContainer);
   })
   .catch(console.error);
