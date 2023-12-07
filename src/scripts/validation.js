@@ -79,12 +79,12 @@ function toggleButtonState (inputList, buttonElement, inactiveButtonClass) {
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.disabled = false;
   }
-};
+}
 
 function clearValidation (formElement, validationConfig) {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
-  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.classList.add(validationConfig.inactiveButtonClass);
   inputList.forEach((inputElement) => {
     hideError(formElement, inputElement, validationConfig.inputErrorClass, validationConfig.errorClass);
     inputElement.setCustomValidity("");

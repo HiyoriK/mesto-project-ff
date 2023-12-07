@@ -9,11 +9,13 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   const cardTitle = newCard.querySelector('.card__title');
   const cardDeleteButton = newCard.querySelector('.card__delete-button');
   const cardLikeButton = newCard.querySelector('.card__like-button');
+  const likesCounter = newCard.querySelector('.card__like-counter');
   const myPersonalId = '10a6b0e0-042d-42d2-ae9a-432f5cc3ce58';
 
   cardImage.src = card.link;
   cardImage.alt = card.name;
   cardTitle.textContent = card.name;
+  likesCounter.textContent = card.likes.length;
   card.id = card['_id'];
 
   if(card.owner['_id'] != myPersonalId) {
@@ -26,10 +28,8 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   }
 
 
-  
-
   cardLikeButton.addEventListener('click', (evt) => {
-    toggleCardLike(evt);
+    toggleCardLike(evt, cardId, counter);
   });
 
   cardImage.addEventListener('click', openImage);
@@ -42,26 +42,26 @@ function deleteCard (evt) {
   container.remove();
 }
 
-function toggleCardLike(evt, cardId) {
-  const likesCounter = newCard.querySelector('.card__like-counter')
+function toggleCardLike(evt, cardId, counter) {
 
-  if(evt.target.classList.contains('card__like-button_is-active')){
+  if(evt.target.classList.contains('card__like-button_is-active')) {
     removeLike(cardId)
     .then((cardData) => {
       evt.target.classList.remove('card__like-button_is-active')
-      likesCounter.textContent = cardData.likes.length;
+      counter.textContent = cardData.likes.length;
     })
-
-
+    .catch(console.error);
+  }
+  else {
       putLike(cardId)
     .then((cardData) => {
       evt.target.classList.add('card__like-button_is-active')
-      likesCounter.textContent = cardData.likes.length;
+      counter.textContent = cardData.likes.length;
   })
   .catch(console.error);
 }
 
-  evt.target.classList.toggle('card__like-button_is-active');
+  // evt.target.classList.toggle('card__like-button_is-active');
 }
 
 export {createCard, deleteCard, toggleCardLike};

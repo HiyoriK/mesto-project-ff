@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {popups, profilePopup, profileEditButton, profileEditForm, formNameInput, formDescriptionInput, newCardPopup, addNewCardButton, popupCardImage, popupCaption, popupImage, newCardform, formPlaceNameInput, formInputUrl, profileName, profileDescription, profileImage, cardsContainer, avatarPopup, avatarEditButton, avatartEditForm, newAvatarUrl} from './components/constants.js';
+import {popups, profilePopup, profileEditButton, profileEditForm, formNameInput, profileSubmitButton, formDescriptionInput, newCardPopup, addNewCardButton, popupCardImage, popupCaption, popupImage, newCardForm, formPlaceNameInput, formInputUrl, cardSubmitButton, profileName, profileDescription, profileImage, cardsContainer, avatarPopup, avatarEditButton, avatarEditForm, newAvatarUrl, avatarSubmitButton} from './components/constants.js';
 //import {initialCards} from './scripts/cards.js';
 import {createCard, deleteCard, toggleCardLike} from './components/card.js';
 import {openPopup, closePopup} from './components/modal.js';
@@ -26,7 +26,7 @@ getUserInfo()
   originalId = data['_id'];
   formNameInput.textContent = data.name;
   formDescriptionInput.textContent = data.about;
-  //аватарка
+  profileImage.style.backgroundImage = `url('${data.avatar}')`;
 })
 .catch(console.error);
 
@@ -42,25 +42,25 @@ getInitialCards()
 // поп-ап аватарки
 avatarEditButton.addEventListener('click', () => {
   openPopup(avatarPopup);
- 
-  formNameInput.value = profileName.textContent;
-  formDescriptionInput.value = profileDescription.textContent;
- //  clearValidation (formElement, validationConfig);
+  clearValidation (avatarEditForm, validationConfig);
+  avatarEditForm.reset();
  })
 
 // по-ап профиля
 
 profileEditButton.addEventListener('click', () => {
  openPopup(profilePopup);
- evt.target.reset();
-//  clearValidation (formElement, validationConfig);
+ formNameInput.value = profileName.textContent;
+ formDescriptionInput.value = profileDescription.textContent;
+ clearValidation (profileEditForm, validationConfig);
 })
 
 // поп-ап добавления карточки
 
 addNewCardButton.addEventListener('click', () => {
   openPopup(newCardPopup);
-  // clearValidation (formElement, validationConfig);
+  clearValidation (newCardForm, validationConfig);
+  newCardForm.reset();
 })
 
 //поп-ап открытия изображения по клику на карточку
@@ -86,7 +86,7 @@ popups.forEach((popup) => {
 
 function addNewCard(evt) {
   evt.preventDefault();
-
+  avatarSubmitButton.textContent = 'Сохранение...';
   const newCardContent = {
     name: formPlaceNameInput.value,
     link: formInputUrl.value,
@@ -103,12 +103,13 @@ function addNewCard(evt) {
   evt.target.reset();
 }
 
-newCardform.addEventListener('submit', addNewCard);
+newCardForm.addEventListener('submit', addNewCard);
 
 //редактирование данных в профиле
 
 function editProfile(evt) {
   evt.preventDefault();
+  profileSubmitButton.textContent = 'Сохранение...';
   updateProfileInfo(formNameInput.value, formDescriptionInput.value)
   .then(data => {
       profileName.textContent = data.name;
@@ -124,6 +125,7 @@ profileEditForm.addEventListener('submit', editProfile);
 
 function editProfileImage(evt) {
   evt.preventDefault();
+  avatarSubmitButton.textContent = 'Сохранение...';
   updateProfileImage(newAvatarUrl)
   .then ((data) => {
     profileImage.style.backgroundImage = `url('${data.avatar}')`;
@@ -132,7 +134,7 @@ function editProfileImage(evt) {
   closePopup(avatarPopup);
 }
 
-avatartEditFormEditForm.addEventListener('submit', editProfileImage);
+avatarEditForm.addEventListener('submit', editProfileImage);
 
 
 
