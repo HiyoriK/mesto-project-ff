@@ -7,7 +7,7 @@ const validationConfig = {
   errorClass: "popup__error_visible",
 };
 
-// починить окрашивание надписи - появилось только у места. без понятия - как...
+// починить окрашивание надписи
 
 const showError = (
   formElement,

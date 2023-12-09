@@ -52,19 +52,19 @@ function addCard(item, itemList) {
     deleteCard,
     toggleCardLike,
     openPopupImage,
-    myPersonalId
+    id
   );
   itemList.prepend(cardItem);
 }
 
 //вывод данных с сервера
-let myPersonalId = "";
+let id= "";
 const promises = [getUserInfo, getInitialCards];
 
 Promise.all(promises).then(() => {
   getUserInfo()
     .then((data) => {
-      originalId = data["_id"];
+      id = data["_id"];
       formNameInput.textContent = data.name;
       formDescriptionInput.textContent = data.about;
       profileImage.style.backgroundImage = `url('${data.avatar}')`;
@@ -143,7 +143,7 @@ function addNewCard(evt) {
         deleteCard,
         toggleCardLike,
         openPopupImage,
-        originalId
+       id
       ))
     })
     .catch(console.error);
@@ -170,7 +170,7 @@ function editProfile(evt) {
 profileEditForm.addEventListener("submit", editProfile);
 
 //обновление аватарки
-
+// пока не работает, починить
 function editProfileImage(evt) {
   evt.preventDefault();
   avatarSubmitButton.textContent = "Сохранение...";

@@ -62,8 +62,6 @@ function toggleCardLike(evt, cardId, counter) {
       })
       .catch(console.error);
   }
-
-   evt.target.classList.toggle('card__like-button_is-active');
 }
 
 export { createCard, deleteCard, toggleCardLike };
