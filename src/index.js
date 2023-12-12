@@ -124,13 +124,8 @@ popups.forEach((popup) => {
 function addNewCard(evt) {
   evt.preventDefault();
   cardSubmitButton.textContent = "Сохранение...";
-  const newCardContent = {
-    name: formPlaceNameInput.value,
-    link: formInputUrl.value,
-    alt: formPlaceNameInput.value,
-  };
-
-  addNewCardToList(newCardContent.name, newCardContent.link)
+  
+  addNewCardToList(formPlaceNameInput.value, formInputUrl.value)
     .then((item) => {
       cardsContainer.prepend(createCard(
         item,
