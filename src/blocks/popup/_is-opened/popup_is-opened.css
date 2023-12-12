@@ -6,3 +6,12 @@
   /* When opening, make the visibility change immediate with no delay */
   transition: visibility 0s, opacity 0.6s;
 }
+
+.popup__error {
+  color:#f00;
+ font-size: 12px;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 1.2;
+}
+
