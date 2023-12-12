@@ -17,7 +17,7 @@
   inline-size: 120px;
   block-size: 120px;
   position: absolute;
-  background: transparent url('../../../images/edit-icon.svg') center no-repeat;
+  background: transparent url('../../../images/edit-icon-large.svg') center no-repeat;
   border: none;
   z-index: 2;
   cursor: pointer;
