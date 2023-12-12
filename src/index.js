@@ -27,7 +27,7 @@ import {
   avatarSubmitButton,
 } from "./scripts/constants.js";
 import { createCard, deleteCard, toggleCardLike } from "./components/card.js";
-import { openPopup, closePopup } from "./components/modal.js";
+import { openPopup, closePopup, closePopupByClick } from "./components/modal.js";
 import {
   enableValidation,
   clearValidation,
@@ -116,14 +116,7 @@ function openPopupImage(evt) {
 
 //закрытие поп-апов
 popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (
-      evt.target === evt.currentTarget ||
-      evt.target.classList.contains("popup__close")
-    ) {
-      closePopup(popup);
-    }
-  });
+  popup.addEventListener('mousedown', closePopupByClick )
 });
 
 //длбавление новой карточки
@@ -149,7 +142,10 @@ function addNewCard(evt) {
       ))
       closePopup(newCardPopup);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      profileSubmitButton.textContent = "Сохранить";
+    });
   
   evt.target.reset();
 }
@@ -167,8 +163,10 @@ function editProfile(evt) {
       profileDescription.textContent = data.about;
       closePopup(profilePopup);
     })
-    .catch(console.error);
-  
+    .catch(console.error)
+    .finally(() => {
+      profileSubmitButton.textContent = "Сохранить";
+    });
 }
 
 profileEditForm.addEventListener("submit", editProfile);
@@ -183,7 +181,10 @@ function editProfileImage(evt) {
       profileImage.style.backgroundImage = `url('${data.avatar}')`;
       closePopup(avatarPopup);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      profileSubmitButton.textContent = "Сохранить";
+    });
   
 }
 

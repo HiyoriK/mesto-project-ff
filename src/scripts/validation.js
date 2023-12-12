@@ -1,6 +1,3 @@
-
-// починить окрашивание надписи
-
 const showError = (
   formElement,
   inputElement,
@@ -96,10 +93,14 @@ function hasInvalidInput(inputList) {
   });
 }
 
+const disableSubmitButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass); 
+  buttonElement.disabled = true;
+}
+
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.disabled = true;
+   disableSubmitButton(buttonElement, inactiveButtonClass);
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.disabled = false;
@@ -113,7 +114,7 @@ function clearValidation(formElement, validationConfig) {
   const buttonElement = formElement.querySelector(
     validationConfig.submitButtonSelector
   );
-  buttonElement.classList.add(validationConfig.inactiveButtonClass);
+  disableSubmitButton(buttonElement, validationConfig.inactiveButtonClass);
   inputList.forEach((inputElement) => {
     hideError(
       formElement,

@@ -24,5 +24,14 @@ function closePopupByEsc(evt) {
   }
 };
 
+function closePopupByClick (evt) {
+    if (
+      evt.target === evt.currentTarget ||
+      evt.target.classList.contains("popup__close")
+    ) {
+      closePopup(document.querySelector('.popup_is-opened'))
+    }
+}
 
-export {openPopup, closePopup};
+
+export {openPopup, closePopup, closePopupByClick};
