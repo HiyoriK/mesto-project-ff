@@ -25,17 +25,15 @@ import {
   avatarEditForm,
   newAvatarUrl,
   avatarSubmitButton,
-} from "./components/constants.js";
-//import {initialCards} from './scripts/cards.js';
+} from "./scripts/constants.js";
 import { createCard, deleteCard, toggleCardLike } from "./components/card.js";
 import { openPopup, closePopup } from "./components/modal.js";
 import {
-  validationConfig,
   enableValidation,
   clearValidation,
 } from "./scripts/validation.js";
 import {
-  user,
+  config,
   getUserInfo,
   getInitialCards,
   updateProfileInfo,
@@ -43,6 +41,15 @@ import {
   deleteServerCard,
   updateProfileImage,
 } from "./scripts/api.js";
+
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
 
 //добавление карточки на страницу
 
@@ -52,31 +59,25 @@ function addCard(item, itemList) {
     deleteCard,
     toggleCardLike,
     openPopupImage,
-    id
+    userId
   );
   itemList.prepend(cardItem);
 }
 
 //вывод данных с сервера
-let id= "";
-const promises = [getUserInfo, getInitialCards];
+let userId= "";
+const promises = [getUserInfo(), getInitialCards()];
 
-Promise.all(promises).then(() => {
-  getUserInfo()
-    .then((data) => {
-      id = data["_id"];
-      formNameInput.textContent = data.name;
-      formDescriptionInput.textContent = data.about;
-      profileImage.style.backgroundImage = `url('${data.avatar}')`;
-    })
-    .catch(console.error);
+Promise.all(promises)
+.then(([getUserInfo, getInitialCards]) => {
+  userId = getUserInfo["_id"];
+        formNameInput.textContent = getUserInfo.name;
+        formDescriptionInput.textContent = getUserInfo.about;
+        profileImage.style.backgroundImage = `url('${getUserInfo.avatar}')`;
+        getInitialCards.forEach((card) => addCard(card, cardsContainer));
+})
+.catch(console.error);
 
-  getInitialCards()
-    .then((data) => {
-      data.forEach((card) => addCard(card, cardsContainer));
-    })
-    .catch(console.error);
-});
 
 // открытие поп-апов
 // поп-ап аватарки
@@ -143,11 +144,13 @@ function addNewCard(evt) {
         deleteCard,
         toggleCardLike,
         openPopupImage,
-       id
+        userId
+
       ))
+      closePopup(newCardPopup);
     })
     .catch(console.error);
-  closePopup(newCardPopup);
+  
   evt.target.reset();
 }
 
@@ -162,9 +165,10 @@ function editProfile(evt) {
     .then((data) => {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
+      closePopup(profilePopup);
     })
     .catch(console.error);
-  closePopup(profilePopup);
+  
 }
 
 profileEditForm.addEventListener("submit", editProfile);
@@ -177,9 +181,10 @@ function editProfileImage(evt) {
   updateProfileImage(newAvatarUrl)
     .then((data) => {
       profileImage.style.backgroundImage = `url('${data.avatar}')`;
+      closePopup(avatarPopup);
     })
     .catch(console.error);
-  closePopup(avatarPopup);
+  
 }
 
 avatarEditForm.addEventListener("submit", editProfileImage);

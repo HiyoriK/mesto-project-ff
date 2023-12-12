@@ -1,8 +1,8 @@
-import { user, putLike, removeLike } from "../scripts/api.js";
+import { config, putLike, removeLike } from "../scripts/api.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
 
-function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
+function createCard(card, deleteCard, toggleCardLike, openImage, userId) {
   const newCard = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = newCard.querySelector(".card__image");
   const cardTitle = newCard.querySelector(".card__title");
@@ -17,7 +17,7 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
   likesCounter.textContent = card.likes.length;
   newCard.id = card["_id"];
 
-  if (card.owner["_id"] != originalId) {
+  if (card.owner["_id"] != userId) {
     cardDeleteButton.style.display = "none";
   } else {
     cardDeleteButton.addEventListener("click", (evt) => {
@@ -25,7 +25,7 @@ function createCard(card, deleteCard, toggleCardLike, openImage, originalId) {
     });
   }
 
-  const hasLike = card.likes.some ((i) => i === originalId);
+  const hasLike = card.likes.some ((i) => i === userId);
   if(hasLike){
     cardLikeButton.classList.add("card__like-button_is-active");
   }
@@ -46,22 +46,15 @@ function deleteCard(evt) {
 
 
 function toggleCardLike(evt, cardId, counter) {
-  const originalId = "523b5ad7a5b12a8d36bb5e8b";
-  if (evt.target.classList.contains("card__like-button_is-active")) {
-    removeLike(cardId)
-      .then((cardData) => {
-        evt.target.classList.remove("card__like-button_is-active");
-        counter.textContent = cardData.likes.length;
-      })
-      .catch(console.error);
-  } else {
-    putLike(cardId)
-      .then((cardData) => {
-        evt.target.classList.add("card__like-button_is-active");
-        counter.textContent = cardData.likes.length;
-      })
-      .catch(console.error);
-  }
+  const likeMethod = evt.target.classList.contains("card__like-button_is-active")
+  ? removeLike
+  : putLike;
+   likeMethod(cardId) 
+        .then((cardData) => { 
+          evt.target.classList.toggle("card__like-button_is-active"); 
+          counter.textContent = cardData.likes.length; 
+        }) 
+        .catch(console.error); 
 }
 
 export { createCard, deleteCard, toggleCardLike };
